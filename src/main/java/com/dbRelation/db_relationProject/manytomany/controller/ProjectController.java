@@ -57,7 +57,7 @@ public class ProjectController {
 
     }
 
-    @GetMapping("/{idProject")
+    @GetMapping("/{idProject}")
     public ResponseEntity<?> getProjectById(@PathVariable Long idProject) {
         Optional<Project> optionalProject = projectRepository.findById(idProject);
         if(optionalProject.isPresent()) {

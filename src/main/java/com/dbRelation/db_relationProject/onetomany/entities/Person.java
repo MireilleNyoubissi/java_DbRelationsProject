@@ -22,4 +22,8 @@ public class Person {
     @JoinColumn(name = "personId")
     private Set<House> houses;
 
+    @OneToMany
+    @JoinColumn(name = "personId")
+    private Set<Contact> contacts;
+
 }

@@ -14,8 +14,10 @@ public class Person {
     @Column
     private Long id;
 
-
+    @Column
     private String personName;
+
+    @Column
     private String personEmail;
 
     @OneToMany

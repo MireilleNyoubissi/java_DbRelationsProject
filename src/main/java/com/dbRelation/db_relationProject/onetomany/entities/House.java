@@ -13,6 +13,7 @@ public class House {
     @Column
     private Long id;
 
+    @Column
     private String address;
 
     @ManyToOne

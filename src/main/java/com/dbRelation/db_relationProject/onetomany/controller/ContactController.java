@@ -71,4 +71,18 @@ public class ContactController {
         return new ResponseEntity<>("Contact not find", HttpStatus.NOT_FOUND);
     }
 
+    //This endpoint update a contact
+    @PutMapping("{id}")
+    public ResponseEntity<?> updateContact(@PathVariable Long id, @RequestBody ContactDto contactDto) {
+        Optional<Contact> optionalContact = contactRepository.findById(id);
+        if(optionalContact.isPresent()) {
+            Contact contact = optionalContact.get();
+            contact.setName(contactDto.getName());
+            contact.setTel(contactDto.getTel());
+            contact.setEmail(contactDto.getEmail());
+            return new ResponseEntity<>(contactRepository.save(contact), HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Contact not found", HttpStatus.NOT_FOUND);
+    }
+
 }

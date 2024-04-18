@@ -10,7 +10,7 @@ public class House {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column()
+    @Column
     private Long id;
 
     private String address;

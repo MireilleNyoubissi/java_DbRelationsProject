@@ -60,6 +60,15 @@ public class ContactController {
         return new ResponseEntity<>(contacts, HttpStatus.OK);
     }
 
-
+    //This endpoint get a contact by its id
+    @GetMapping("{id}")
+    public ResponseEntity<?> getContactById(@PathVariable Long id) {
+        Optional<Contact> optionalContact = contactRepository.findById(id);
+        if(optionalContact.isPresent()) {
+            Contact contact = optionalContact.get();
+            return new ResponseEntity<>(contact, HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Contact not find", HttpStatus.NOT_FOUND);
+    }
 
 }

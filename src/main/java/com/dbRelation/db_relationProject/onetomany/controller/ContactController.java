@@ -53,5 +53,13 @@ public class ContactController {
         return new ResponseEntity<>("Person doesn't exist", HttpStatus.NOT_FOUND);
     }
 
+    // this endpoint get all contacts
+    @GetMapping
+    public ResponseEntity<Iterable<Contact>> getAllContacts(){
+        Iterable<Contact> contacts = contactRepository.findAll();
+        return new ResponseEntity<>(contacts, HttpStatus.OK);
+    }
+
+
 
 }

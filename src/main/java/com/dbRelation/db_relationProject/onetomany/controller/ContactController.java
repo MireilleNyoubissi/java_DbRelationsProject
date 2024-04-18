@@ -85,4 +85,16 @@ public class ContactController {
         return new ResponseEntity<>("Contact not found", HttpStatus.NOT_FOUND);
     }
 
+    //This endpoint delete a contact
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deleteContact(@PathVariable Long id) {
+        Optional<Contact> optionalContact = contactRepository.findById(id);
+        if(optionalContact.isPresent()) {
+            Contact contact = optionalContact.get();
+            contactRepository.delete(contact);
+            return new ResponseEntity<>("Contact has been deleted", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("contact not found", HttpStatus.NOT_FOUND);
+    }
+
 }

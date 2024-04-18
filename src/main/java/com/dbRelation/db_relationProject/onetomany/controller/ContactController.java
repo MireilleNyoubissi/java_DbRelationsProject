@@ -52,4 +52,49 @@ public class ContactController {
         }
         return new ResponseEntity<>("Person doesn't exist", HttpStatus.NOT_FOUND);
     }
+
+    // this endpoint get all contacts
+    @GetMapping
+    public ResponseEntity<Iterable<Contact>> getAllContacts(){
+        Iterable<Contact> contacts = contactRepository.findAll();
+        return new ResponseEntity<>(contacts, HttpStatus.OK);
+    }
+
+    //This endpoint get a contact by its id
+    @GetMapping("{id}")
+    public ResponseEntity<?> getContactById(@PathVariable Long id) {
+        Optional<Contact> optionalContact = contactRepository.findById(id);
+        if(optionalContact.isPresent()) {
+            Contact contact = optionalContact.get();
+            return new ResponseEntity<>(contact, HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Contact not find", HttpStatus.NOT_FOUND);
+    }
+
+    //This endpoint update a contact
+    @PutMapping("{id}")
+    public ResponseEntity<?> updateContact(@PathVariable Long id, @RequestBody ContactDto contactDto) {
+        Optional<Contact> optionalContact = contactRepository.findById(id);
+        if(optionalContact.isPresent()) {
+            Contact contact = optionalContact.get();
+            contact.setName(contactDto.getName());
+            contact.setTel(contactDto.getTel());
+            contact.setEmail(contactDto.getEmail());
+            return new ResponseEntity<>(contactRepository.save(contact), HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Contact not found", HttpStatus.NOT_FOUND);
+    }
+
+    //This endpoint delete a contact
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deleteContact(@PathVariable Long id) {
+        Optional<Contact> optionalContact = contactRepository.findById(id);
+        if(optionalContact.isPresent()) {
+            Contact contact = optionalContact.get();
+            contactRepository.delete(contact);
+            return new ResponseEntity<>("Contact has been deleted", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("contact not found", HttpStatus.NOT_FOUND);
+    }
+
 }

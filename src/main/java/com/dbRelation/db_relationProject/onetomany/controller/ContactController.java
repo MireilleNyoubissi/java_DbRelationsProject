@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -95,6 +96,11 @@ public class ContactController {
             return new ResponseEntity<>("Contact has been deleted", HttpStatus.OK);
         }
         return new ResponseEntity<>("contact not found", HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("searchName")
+    public ResponseEntity<List<Contact>> findNameLike(@RequestParam String searchName) {
+        return new ResponseEntity<>(contactRepository.findNameLikeV2(searchName), HttpStatus.OK);
     }
 
 }

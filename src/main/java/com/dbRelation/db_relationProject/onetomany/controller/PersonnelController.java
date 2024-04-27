@@ -6,10 +6,7 @@ import com.dbRelation.db_relationProject.onetomany.repository.PersonnelRepositor
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/personnel")
@@ -29,5 +26,11 @@ public class PersonnelController {
         return new ResponseEntity<>(personnelRepository.save(personnel), HttpStatus.CREATED);
     }
 
+    //endpoint to get all personnel
+    @GetMapping
+    public ResponseEntity<Iterable<Personnel>> getAllPersonnel() {
+        Iterable<Personnel> personnel = personnelRepository.findAll();
+        return new ResponseEntity<>(personnel, HttpStatus.OK);
+    }
 
 }

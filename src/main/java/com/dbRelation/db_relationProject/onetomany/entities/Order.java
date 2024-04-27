@@ -22,8 +22,8 @@ public class Order {
     private Customer customer;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL )
-    @JoinColumn(name = "employeeId")
-    private Employee employee;
+    @JoinColumn(name = "personnelId")
+    private Personnel employee;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "ORDER_SUPPLIER", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "supplier_id"))

@@ -63,5 +63,17 @@ public class PersonnelController {
         return new ResponseEntity<>("Personnel doesn't exist", HttpStatus.NOT_FOUND);
     }
 
+    //Endpoint to delete a personnel
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deletePersonnel(@PathVariable Long id) {
+        Optional<Personnel> personnelOptional = personnelRepository.findById(id);
+        if(personnelOptional.isPresent()) {
+            Personnel personnel = personnelOptional.get();
+            personnelRepository.delete(personnel);
+            return new ResponseEntity<>("Personnel has been deleted", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Personnel doesn't exist", HttpStatus.NOT_FOUND);
+    }
+
 
 }

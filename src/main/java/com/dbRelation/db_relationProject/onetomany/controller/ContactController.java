@@ -3,6 +3,7 @@ package com.dbRelation.db_relationProject.onetomany.controller;
 import com.dbRelation.db_relationProject.onetomany.dto.AddPersonToContact;
 import com.dbRelation.db_relationProject.onetomany.dto.ContactDto;
 import com.dbRelation.db_relationProject.onetomany.entities.Contact;
+import com.dbRelation.db_relationProject.onetomany.entities.ContactWithPerson;
 import com.dbRelation.db_relationProject.onetomany.entities.Person;
 import com.dbRelation.db_relationProject.onetomany.repository.ContactRepository;
 import com.dbRelation.db_relationProject.onetomany.repository.PersonRepository;
@@ -102,5 +103,30 @@ public class ContactController {
     public ResponseEntity<List<Contact>> findNameLike(@RequestParam String searchName) {
         return new ResponseEntity<>(contactRepository.findNameLikeV2(searchName), HttpStatus.OK);
     }
+
+    @GetMapping("name")
+    public ResponseEntity<List<Contact>> findNameLikeLimits(@RequestParam String name) {
+        return new ResponseEntity<>(contactRepository.findNameLikeDesc(name), HttpStatus.OK);
+    }
+
+    @GetMapping("id")
+    public ResponseEntity<List<Contact>> findIds(@RequestParam Long id) {
+        return new ResponseEntity<>(contactRepository.findId(id), HttpStatus.OK);
+    }
+
+    @GetMapping("test/a")
+    public ResponseEntity<List<Contact>> findPersonContact(@RequestParam Long personId) {
+        Person person = new Person();
+        person.setId(personId);
+        return new ResponseEntity<>(contactRepository.findPersonContact(person), HttpStatus.OK);
+    }
+
+    @GetMapping("contactWithPerson")
+    public ResponseEntity<List<ContactWithPerson>> findContactWithPerson() {
+        return new ResponseEntity<>(contactRepository.findAllContactsWithPerson(), HttpStatus.OK);
+    }
+
+
+
 
 }

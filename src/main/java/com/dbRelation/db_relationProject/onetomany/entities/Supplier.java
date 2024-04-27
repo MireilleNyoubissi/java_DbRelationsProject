@@ -34,6 +34,6 @@ public class Supplier {
     private String country;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "ORDER_SUPPLIER", joinColumns = @JoinColumn(name = "supplier_id"), inverseJoinColumns = @JoinColumn(name = "order_id"))
+    @JoinTable(name = "ORDER_SUPPLIER", joinColumns = @JoinColumn(name = "supplierId"), inverseJoinColumns = @JoinColumn(name = "orderId"))
     private Set<Order> orders;
 }

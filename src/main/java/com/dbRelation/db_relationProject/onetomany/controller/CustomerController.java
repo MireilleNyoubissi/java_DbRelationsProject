@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("api/customers")
 public class CustomerController {
@@ -36,4 +38,17 @@ public class CustomerController {
         Iterable<Customer> customers = customerRepository.findAll();
         return new ResponseEntity<>(customers, HttpStatus.OK);
     }
+
+    //Endpoint to get a customer by id
+
+    @GetMapping("{id}")
+    public ResponseEntity<?> getCustomerById(@PathVariable Long id) {
+        Optional<Customer> customerOptional = customerRepository.findById(id);
+        if(customerOptional.isPresent()) {
+            Customer customer = customerOptional.get();
+            return new ResponseEntity<>(customer, HttpStatus.OK);
+        }
+        return new ResponseEntity<>("customer doesn't exist", HttpStatus.NOT_FOUND);
+    }
+
 }

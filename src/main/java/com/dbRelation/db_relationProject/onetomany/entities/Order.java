@@ -19,5 +19,9 @@ public class Order {
     @JoinColumn(name = "customerId")
     private Customer customer;
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL )
+    @JoinColumn(name = "employeeId")
+    private Employee employee;
+
     
 }

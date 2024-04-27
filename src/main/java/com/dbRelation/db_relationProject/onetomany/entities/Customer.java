@@ -33,7 +33,7 @@ public class Customer {
     @Column
     private String country;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL )
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "customerId")
     private Set<Order> orders;
 

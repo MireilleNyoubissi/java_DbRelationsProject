@@ -68,4 +68,16 @@ public class CustomerController {
         return new ResponseEntity<>("Customer doesn't exist", HttpStatus.NOT_FOUND);
     }
 
+    //Endpoint to delete a customer
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deleteCustomer(@PathVariable Long id) {
+        Optional<Customer> customerOptional = customerRepository.findById(id);
+        if(customerOptional.isPresent()) {
+            Customer customer = customerOptional.get();
+            customerRepository.delete(customer);
+            return new ResponseEntity<>("Customer has been deleted", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Customer doesn't exist", HttpStatus.NOT_FOUND);
+    }
+
 }

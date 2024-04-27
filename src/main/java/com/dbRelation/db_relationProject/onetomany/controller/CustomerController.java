@@ -48,7 +48,24 @@ public class CustomerController {
             Customer customer = customerOptional.get();
             return new ResponseEntity<>(customer, HttpStatus.OK);
         }
-        return new ResponseEntity<>("customer doesn't exist", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Customer doesn't exist", HttpStatus.NOT_FOUND);
+    }
+
+    //Endpoint to update a customer
+    @PutMapping("{id}")
+    public ResponseEntity<?> updateCustomer(@PathVariable Long id, @RequestBody CustomerDto customerDto) {
+        Optional<Customer> customerOptional = customerRepository.findById(id);
+        if(customerOptional.isPresent()) {
+            Customer customer = customerOptional.get();
+            customer.setCustomerName(customerDto.getCustomerName());
+            customer.setContactName(customerDto.getContactName());
+            customer.setAddress(customerDto.getAddress());
+            customer.setPostalCode(customerDto.getPostalCode());
+            customer.setCity(customerDto.getCity());
+            customer.setCountry(customerDto.getCountry());
+            return new ResponseEntity<>(customerRepository.save(customer), HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Customer doesn't exist", HttpStatus.NOT_FOUND);
     }
 
 }

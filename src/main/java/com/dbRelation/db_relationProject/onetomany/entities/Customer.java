@@ -6,9 +6,9 @@ import lombok.Data;
 import java.util.Set;
 
 @Entity //Tels hibernate to create a table out of this class
-@Table(name = "CUSTOMERS")
+@Table(name = "CUSTOMER")
 @Data
-public class Customers {
+public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,7 +33,7 @@ public class Customers {
     @Column
     private String country;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL )
     @JoinColumn(name = "customerId")
     private Set<Order> orders;
 

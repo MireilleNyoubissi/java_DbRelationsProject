@@ -31,4 +31,13 @@ public class SupplierController {
         return new ResponseEntity<>(supplierRepository.save(supplier), HttpStatus.CREATED);
     }
 
+    //Endpoint to get all suppliers
+
+    @GetMapping
+    public ResponseEntity<Iterable<Supplier>> getAllSuppliers() {
+        Iterable<Supplier> suppliers = supplierRepository.findAll();
+        return new ResponseEntity<>(suppliers, HttpStatus.OK);
+    }
+
+
 }

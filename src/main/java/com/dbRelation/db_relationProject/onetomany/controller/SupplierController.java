@@ -39,5 +39,15 @@ public class SupplierController {
         return new ResponseEntity<>(suppliers, HttpStatus.OK);
     }
 
+    //Endpoint to get a supplier by id
 
+    @GetMapping("{id}")
+    public ResponseEntity<?> getSupplierById(@PathVariable Long id) {
+        Optional<Supplier> supplierOptional = supplierRepository.findById(id);
+        if(supplierOptional.isPresent()) {
+            Supplier supplier = supplierOptional.get();
+            return new ResponseEntity<>(supplier, HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Supplier doesn't exist", HttpStatus.NOT_FOUND);
+    }
 }

@@ -58,6 +58,18 @@ public class OrderController {
         return new ResponseEntity<>("Order doesn't exist", HttpStatus.NOT_FOUND);
     }
 
+    //Endpoint to delete an order
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deleteOrder(@PathVariable Long id) {
+        Optional<Order> orderOptional = orderRepository.findById(id);
+        if(orderOptional.isPresent()) {
+            Order order = orderOptional.get();
+            orderRepository.delete(order);
+            return new ResponseEntity<>("Order has been deleted", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Order doesn't exist", HttpStatus.NOT_FOUND);
+    }
+
 }
 
 

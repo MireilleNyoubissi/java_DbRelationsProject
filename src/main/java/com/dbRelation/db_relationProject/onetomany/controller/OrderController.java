@@ -1,11 +1,14 @@
 package com.dbRelation.db_relationProject.onetomany.controller;
 
 import com.dbRelation.db_relationProject.onetomany.dto.AddCustomerToOrderDto;
+import com.dbRelation.db_relationProject.onetomany.dto.AddPersonnelToOrderDto;
 import com.dbRelation.db_relationProject.onetomany.dto.OrderDto;
 import com.dbRelation.db_relationProject.onetomany.entities.Customer;
 import com.dbRelation.db_relationProject.onetomany.entities.Order;
+import com.dbRelation.db_relationProject.onetomany.entities.Personnel;
 import com.dbRelation.db_relationProject.onetomany.repository.CustomerRepository;
 import com.dbRelation.db_relationProject.onetomany.repository.OrderRepository;
+import com.dbRelation.db_relationProject.onetomany.repository.PersonnelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +25,9 @@ public class OrderController {
 
     @Autowired
     CustomerRepository customerRepository;
+    
+    @Autowired
+    PersonnelRepository personnelRepository;
 
     //Endpoint to create an order
 
@@ -50,6 +56,26 @@ public class OrderController {
             return new ResponseEntity<>("Order doesn't exist", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>("Customer doesn't exist", HttpStatus.NOT_FOUND);
+    }
+
+    //Endpoint to add personnel to order
+
+    @PostMapping("personnelId")
+    public ResponseEntity<?> addPersonnelToOrder(@PathVariable Long personnelId, @RequestBody AddPersonnelToOrderDto addPersonnelToOrderDto) {
+        Optional<Personnel> personnelOptional = personnelRepository.findById(personnelId);
+        if(personnelOptional.isPresent()) {
+            Personnel personnel = personnelOptional.get();
+            if(addPersonnelToOrderDto.getOrderId() != null) {
+                Optional<Order> orderOptional = orderRepository.findById(addPersonnelToOrderDto.getOrderId());
+                if(orderOptional.isPresent()) {
+                    Order order = orderOptional.get();
+                    order.setPersonnel(personnel);
+                    return new ResponseEntity<>(orderRepository.save(order), HttpStatus.CREATED);
+                }
+            }
+            return new ResponseEntity<>("Order doesn't exist", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>("Personnel doesn't exist", HttpStatus.NOT_FOUND);
     }
 
     //Endpoint to get all orders

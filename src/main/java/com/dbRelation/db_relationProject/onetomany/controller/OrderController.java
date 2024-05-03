@@ -25,6 +25,15 @@ public class OrderController {
         order.setOrderDate(orderDto.getOrderDate());
         return new ResponseEntity<>(orderRepository.save(order), HttpStatus.CREATED);
     }
+
+    //Endpoint to get all orders
+
+    @GetMapping
+    public ResponseEntity<Iterable<Order>> getAllOrders() {
+        Iterable<Order> orders = orderRepository.findAll();
+        return new ResponseEntity<>(orders, HttpStatus.OK);
+    }
+
 }
 
 

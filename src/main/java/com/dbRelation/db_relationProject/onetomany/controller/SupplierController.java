@@ -50,4 +50,22 @@ public class SupplierController {
         }
         return new ResponseEntity<>("Supplier doesn't exist", HttpStatus.NOT_FOUND);
     }
+
+    //Endpoint to update a supplier
+    @PutMapping("{id}")
+    public ResponseEntity<?> updateSupplier(@PathVariable Long id, @RequestBody SupplierDto supplierDto) {
+        Optional<Supplier> supplierOptional = supplierRepository.findById(id);
+        if(supplierOptional.isPresent()) {
+            Supplier supplier = supplierOptional.get();
+            supplier.setSupplierName(supplierDto.getSupplierName());
+            supplier.setContactName(supplierDto.getContactName());
+            supplier.setAddress(supplierDto.getAddress());
+            supplier.setPostalCode(supplierDto.getPostalCode());
+            supplier.setCity(supplierDto.getCity());
+            supplier.setCountry(supplierDto.getCountry());
+            return new ResponseEntity<>(supplierRepository.save(supplier), HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Supplier doesn't exist", HttpStatus.NOT_FOUND);
+    }
+
 }

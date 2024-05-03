@@ -46,6 +46,18 @@ public class OrderController {
         return new ResponseEntity<>("Order doesn't exist", HttpStatus.NOT_FOUND);
     }
 
+    //Endpoint to update an order
+    @PutMapping("{id}")
+    public ResponseEntity<?> updateOrder(@PathVariable Long id, @RequestBody OrderDto orderDto) {
+        Optional<Order> orderOptional = orderRepository.findById(id);
+        if(orderOptional.isPresent()) {
+            Order order = orderOptional.get();
+            order.setOrderDate(orderDto.getOrderDate());
+            return new ResponseEntity<>(orderRepository.save(order), HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Order doesn't exist", HttpStatus.NOT_FOUND);
+    }
+
 }
 
 

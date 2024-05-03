@@ -34,6 +34,18 @@ public class OrderController {
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
+    //Endpoint to get an order by id
+
+    @GetMapping("{id}")
+    public ResponseEntity<?> getOrderById(@PathVariable Long id) {
+        Optional<Order> orderOptional = orderRepository.findById(id);
+        if(orderOptional.isPresent()) {
+            Order order = orderOptional.get();
+            return new ResponseEntity<>(order, HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Order doesn't exist", HttpStatus.NOT_FOUND);
+    }
+
 }
 
 

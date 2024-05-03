@@ -68,4 +68,16 @@ public class SupplierController {
         return new ResponseEntity<>("Supplier doesn't exist", HttpStatus.NOT_FOUND);
     }
 
+    //Endpoint to delete a supplier
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deleteSupplier(@PathVariable Long id) {
+        Optional<Supplier> supplierOptional = supplierRepository.findById(id);
+        if(supplierOptional.isPresent()) {
+            Supplier supplier = supplierOptional.get();
+            supplierRepository.delete(supplier);
+            return new ResponseEntity<>("Supplier has been deleted", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Supplier doesn't exist", HttpStatus.NOT_FOUND);
+    }
+
 }

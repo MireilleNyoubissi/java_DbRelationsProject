@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class AddCustomerToOrderDto {
-    private Long CustomerId;
+    private Long orderId;
 }

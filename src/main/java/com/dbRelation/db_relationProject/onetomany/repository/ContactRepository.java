@@ -29,4 +29,5 @@ public interface ContactRepository extends CrudRepository<Contact, Long> {
     public List<ContactWithPerson> findAllContactsWithPerson();
 
 
+
 }

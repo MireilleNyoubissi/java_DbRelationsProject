@@ -1,20 +1,25 @@
 package com.dbRelation.db_relationProject.onetomany.controller;
 
-import com.dbRelation.db_relationProject.onetomany.dto.AddCustomerToOrderDto;
-import com.dbRelation.db_relationProject.onetomany.dto.AddPersonnelToOrderDto;
-import com.dbRelation.db_relationProject.onetomany.dto.OrderDto;
+import com.dbRelation.db_relationProject.manytomany.dto.AddEmployeeToProjectDto;
+import com.dbRelation.db_relationProject.manytomany.entities.Employee;
+import com.dbRelation.db_relationProject.manytomany.entities.Project;
+import com.dbRelation.db_relationProject.onetomany.dto.*;
 import com.dbRelation.db_relationProject.onetomany.entities.Customer;
 import com.dbRelation.db_relationProject.onetomany.entities.Order;
 import com.dbRelation.db_relationProject.onetomany.entities.Personnel;
 import com.dbRelation.db_relationProject.onetomany.repository.CustomerRepository;
 import com.dbRelation.db_relationProject.onetomany.repository.OrderRepository;
 import com.dbRelation.db_relationProject.onetomany.repository.PersonnelRepository;
+import com.dbRelation.db_relationProject.onetomany.repository.SupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("api/orders")
@@ -29,12 +34,21 @@ public class OrderController {
     @Autowired
     PersonnelRepository personnelRepository;
 
+    @Autowired
+    SupplierRepository supplierRepository;
+
     //Endpoint to create an order
 
     @PostMapping
     public ResponseEntity<Order> createOrder(@RequestBody OrderDto orderDto) {
         Order order = new Order();
         order.setOrderDate(orderDto.getOrderDate());
+        Customer customer = new Customer();
+        customer.setId(orderDto.getCustomerId());
+        order.setCustomer(customer);
+        Personnel personnel = new Personnel();
+        personnel.setId(orderDto.getPersonnelId());
+        order.setPersonnel(personnel);
         return new ResponseEntity<>(orderRepository.save(order), HttpStatus.CREATED);
     }
 
@@ -78,6 +92,7 @@ public class OrderController {
         return new ResponseEntity<>("Personnel doesn't exist", HttpStatus.NOT_FOUND);
     }
 
+
     //Endpoint to get all orders
 
     @GetMapping
@@ -120,6 +135,25 @@ public class OrderController {
             return new ResponseEntity<>("Order has been deleted", HttpStatus.OK);
         }
         return new ResponseEntity<>("Order doesn't exist", HttpStatus.NOT_FOUND);
+    }
+
+    //
+    @GetMapping("customerNameWithOrderId")
+    public ResponseEntity<List<CustomerNameWithOrderIdDto>> findCustomerNameWithOrderIdDto(){
+        List<CustomerNameWithOrderIdDto> a = orderRepository.findCustomerNameWithOrderIdDto();
+        return new ResponseEntity<>(a, HttpStatus.OK);
+    }
+
+    @GetMapping("personnelAgeWithOrderId")
+    public ResponseEntity<List<PersonnelAgeWithOrderIdDto>> findPersonnelAgeWithOrderIdDto(){
+        List<PersonnelAgeWithOrderIdDto> PersonnelAgeWithOrderDtoList = orderRepository.findPersonnelAgeWithOrderIdDto();
+        return new ResponseEntity<>(PersonnelAgeWithOrderDtoList, HttpStatus.OK);
+    }
+
+    @GetMapping("customerCityWithOrderDto")
+    public ResponseEntity<List<CustomerCityWithOrderDto>> findCustomerCityWithOrderDto(){
+        List<CustomerCityWithOrderDto> CustomerCityWithOrderDtoList = orderRepository.findCustomerCityWithOrderDto();
+        return new ResponseEntity<>(CustomerCityWithOrderDtoList, HttpStatus.OK);
     }
 
 }

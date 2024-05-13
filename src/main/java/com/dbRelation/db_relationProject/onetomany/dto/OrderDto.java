@@ -5,4 +5,7 @@ import lombok.Data;
 @Data
 public class OrderDto {
     private String orderDate;
+    private Long customerId;
+    private Long personnelId;
+
 }

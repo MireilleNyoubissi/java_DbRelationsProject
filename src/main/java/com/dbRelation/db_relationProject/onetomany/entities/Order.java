@@ -1,13 +1,16 @@
 package com.dbRelation.db_relationProject.onetomany.entities;
 
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
 @Entity //Tells hibernate to create a table out of this class
 @Table(name = "`ORDER`")
 @Data
+@NoArgsConstructor
 public class Order {
 
     @Id
@@ -17,12 +20,13 @@ public class Order {
     @Column
     private String orderDate;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL )
-    @JoinColumn(name = "customerId")
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customerId", nullable = false)
     private Customer customer;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL )
-    @JoinColumn(name = "personnelId")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "personnelId", nullable = false)
     private Personnel personnel;
 
     @ManyToMany(fetch = FetchType.LAZY)
